@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ITmax Computers</title>
+
+   <!-- Tailwind CSS -->
+   <script src="https://cdn.tailwindcss.com"></script>
+
+   <!-- Font Awesome -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+   <!-- Custom Styles -->
+   <style>
+      :root {
+         --primary-bg: #0F172A;
+         --secondary-bg: #1E293B;
+         --primary-accent: #4F46E5;
+         --secondary-accent: #2DD4BF;
+         --highlight-accent: #9333EA;
+         --text-main: #E2E8F0;
+         --text-secondary: #94A3B8;
+      }
+
+      body {
+         font-family: 'Inter', sans-serif;
+         background-color: var(--primary-bg);
+      }
+
+      .gaming-font {
+         font-family: 'Rajdhani', sans-serif;
+      }
+
+      .nav-link {
+         position: relative;
+         overflow: hidden;
+      }
+
+      .nav-link::after {
+         content: '';
+         position: absolute;
+         bottom: -2px;
+         left: 0;
+         width: 100%;
+         height: 2px;
+         background: var(--secondary-accent);
+         transform: scaleX(0);
+         transition: transform 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+         transform: scaleX(1);
+      }
+
+      /* Mobile menu styles */
+      .mobile-menu {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100vh;
+         background-color: var(--primary-bg);
+         transform: translateX(-100%);
+         transition: transform 0.3s ease-in-out;
+         z-index: 50;
+      }
+
+      .mobile-menu.show {
+         transform: translateX(0);
+      }
+
+      /* Dropdown styles */
+      .dropdown-menu {
+         visibility: hidden;
+         opacity: 0;
+         transform: translateY(-10px);
+         transition: all 0.2s ease-in-out;
+      }
+
+      .dropdown-menu.show {
+         visibility: visible;
+         opacity: 1;
+         transform: translateY(0);
+      }
+
+      /* Overlay styles */
+      .overlay {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color: rgba(0, 0, 0, 0.5);
+         opacity: 0;
+         visibility: hidden;
+         transition: all 0.3s ease-in-out;
+         z-index: 40;
+      }
+
+      .overlay.show {
+         opacity: 1;
+         visibility: visible;
+      }
+
+      .mobile-menu-item:hover .fa-chevron-down {
+         transform: none;
+      }
+      
+      .fa-chevron-down {
+         transition: transform 0.2s ease-in-out;
+      }
+
+      .mobile-menu-item .fa-chevron-down.active {
+         transform: rotate(180deg);
+      }
+   </style>
+</head>
+
+<body class="bg-slate-900">
+   <!-- Announcement Bar -->
+   <div class="bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-sm py-2">
+      <div class="container mx-auto px-4 text-center">
+         <span class="gaming-font">🎮 FREE SHIPPING ON ORDERS OVER $1999 | Use code: GAME</span>
+      </div>
+   </div>
+
+   <!-- Overlay -->
+   <div class="overlay" id="overlay"></div>
+
+   <!-- Navigation -->
+   <nav class="bg-slate-800 backdrop-blur-sm border-b border-slate-700/50 sticky top-0 z-50">
+      <div class="container mx-auto px-4">
+         <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2 gaming-font z-50">
+               <span class="text-2xl font-bold">
+                  <span class="text-indigo-400">IT</span><span class="text-slate-200">max</span>
+               </span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+               <a href="#" class="nav-link text-slate-200 hover:text-indigo-400 transition-colors duration-200">Home</a>
+
+               <!-- Products Dropdown -->
+               <div class="relative dropdown">
+                  <button class="nav-link text-slate-200 hover:text-indigo-400 transition-colors duration-200 flex items-center" data-dropdown="products">
+                     Products
+                     <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                  </button>
+                  <div class="dropdown-menu absolute top-full left-0 bg-slate-800 border border-slate-700/50 rounded-md shadow-lg py-2 w-48" id="products-dropdown">
+                     <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700/70 hover:text-indigo-400 transition-colors duration-200">Gaming PCs</a>
+                     <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700/70 hover:text-indigo-400 transition-colors duration-200">Workstations</a>
+                     <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700/70 hover:text-indigo-400 transition-colors duration-200">Components</a>
+                     <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700/70 hover:text-indigo-400 transition-colors duration-200">Accessories</a>
+                  </div>
+               </div>
+
+               <a href="#" class="nav-link text-slate-200 hover:text-indigo-400 transition-colors duration-200">Build PC</a>
+               <a href="#" class="nav-link text-slate-200 hover:text-indigo-400 transition-colors duration-200">Support</a>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-4">
+               <button class="p-2 text-slate-200 hover:text-indigo-400 transition-colors duration-200 relative group">
+                  <i class="fas fa-search"></i>
+                  <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-slate-200 text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-slate-700/50">
+                     Search
+                  </span>
+               </button>
+
+               <!-- Wishlist Button -->
+               <button class="p-2 text-slate-200 hover:text-indigo-400 transition-colors duration-200 relative">
+                  <i class="fas fa-heart"></i>
+                  <span class="absolute -top-1 -right-1 bg-indigo-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                     0
+                  </span>
+               </button>
+
+               <!-- Cart Button -->
+               <button class="p-2 text-slate-200 hover:text-indigo-400 transition-colors duration-200 relative">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span class="absolute -top-1 -right-1 bg-indigo-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                     0
+                  </span>
+               </button>
+
+               <button class="hidden md:block p-2 text-slate-200 hover:text-indigo-400 transition-colors duration-200">
+                  <i class="fas fa-user"></i>
+               </button>
+
+               <button class="md:hidden p-2 text-slate-200 hover:text-indigo-400 transition-colors duration-200" id="mobile-menu-button">
+                  <i class="fas fa-bars"></i>
+               </button>
+            </div>
+         </div>
+      </div>
+   </nav>
+
+   <!-- Mobile Menu -->
+   <div class="mobile-menu md:hidden bg-slate-900">
+      <div class="p-4 flex justify-between items-center border-b border-slate-700/50">
+         <span class="gaming-font text-2xl font-bold">
+            <span class="text-indigo-400">IT</span>
+            <span class="text-slate-200">max</span>
+         </span>
+         <button class="text-slate-200 hover:text-indigo-400 transition-colors duration-200" id="mobile-close-button">
+            <i class="fas fa-times text-xl"></i>
+         </button>
+      </div>
+      <div class="p-4 space-y-4">
+         <a href="#" class="mobile-menu-item block text-slate-200 hover:text-indigo-400 py-2" style="transition-delay: 0.1s">Home</a>
+         <div class="mobile-menu-item" style="transition-delay: 0.2s">
+            <button class="flex items-center justify-between w-full text-slate-200 hover:text-indigo-400 py-2" data-mobile-dropdown="products-mobile">
+               Products
+               <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+            </button>
+            <div class="hidden pl-4 space-y-2 mt-2" id="products-mobile-dropdown">
+               <a href="#" class="block text-slate-300 hover:text-indigo-400 py-1">Gaming PCs</a>
+               <a href="#" class="block text-slate-300 hover:text-indigo-400 py-1">Workstations</a>
+               <a href="#" class="block text-slate-300 hover:text-indigo-400 py-1">Components</a>
+               <a href="#" class="block text-slate-300 hover:text-indigo-400 py-1">Accessories</a>
+            </div>
+         </div>
+         <a href="#" class="mobile-menu-item block text-slate-200 hover:text-indigo-400 py-2" style="transition-delay: 0.3s">Build PC</a>
+         <a href="#" class="mobile-menu-item block text-slate-200 hover:text-indigo-400 py-2" style="transition-delay: 0.4s">Support</a>
+      </div>
+   </div><?php
+require_once "includes/header.php";
+?>
+
+<main class="container mx-auto px-4 py-8">
+
+   <!-- Hero Section -->
+   <section class="relative h-[600px] overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+         <img
+            src="https://images.unsplash.com/photo-1598550476439-6847785fcea6"
+            alt="Gaming Setup"
+            class="w-full h-full object-cover opacity-50">
+         <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/60"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="container mx-auto px-4 relative h-full flex items-center">
+         <div class="max-w-2xl space-y-6">
+            <h1 class="gaming-font text-5xl md:text-6xl font-bold text-slate-100">
+               Build Your Dream
+               <span class="text-indigo-400 font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Gaming PC</span>
+            </h1>
+            <p class="text-slate-300 text-lg md:text-xl">
+               Custom-built gaming computers with the latest technology
+               for ultimate performance
+            </p>
+            <div class="flex space-x-4">
+               <a href="#build"
+                  class="bg-indigo-600 skew-x-[-5deg] hover:bg-indigo-700 text-white px-8 py-3 
+                        transition duration-300 gaming-font skew-x-[-5deg] hover:shadow-lg hover:shadow-indigo-500/20">
+                  Build Now
+               </a>
+               <a href="#products"
+                  class="border border-slate-600 hover:border-indigo-400 text-slate-200 
+                        px-8 py-3 transition duration-300 gaming-font skew-x-[-5deg] hover:shadow-lg hover:shadow-indigo-500/20">
+                  View PCs
+               </a>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Recently Viewed Section -->
+   <section class="bg-slate-800 py-16">
+      <div class="container mx-auto px-4">
+         <h2 class="gaming-font text-3xl font-bold text-slate-100 mb-8">
+            Recently Viewed
+         </h2>
+
+         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Product Card 1 -->
+            <div class="bg-slate-900  overflow-hidden hover:shadow-lg 
+                        hover:shadow-indigo-500/10 transition duration-300">
+               <img src="https://images.unsplash.com/photo-1624705002806-5d72df19c3ad?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Gaming PC"
+                  class="w-full h-48 object-cover">
+               <div class="p-4">
+                  <h3 class="gaming-font text-slate-100 font-bold">RTX 4090 Build</h3>
+                  <p class="text-slate-400 text-sm mt-2">High-end gaming PC</p>
+                  <p class="text-indigo-400 font-bold mt-2">$2,999</p>
+               </div>
+            </div>
+            <!-- Repeat for other products -->
+         </div>
+      </div>
+   </section>
+   <!-- Special Offers Section -->
+   <section class="bg-slate-900 py-16">
+      <div class="container mx-auto px-4">
+         <h2 class="gaming-font text-3xl font-bold text-slate-100 mb-8">
+            Special Offers
+            <span class="text-indigo-400">/ Limited Time</span>
+         </h2>
+
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Offer Card 1 -->
+            <div class="bg-slate-800  overflow-hidden border border-slate-700 hover:border-indigo-500 transition duration-300">
+               <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c"
+                  alt="Gaming PC Offer"
+                  class="w-full h-56 object-cover">
+               <div class="p-6 space-y-4">
+                  <div class="flex justify-between items-center">
+                     <span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm">Save 20%</span>
+                     <div class="text-teal-400 gaming-font">48:00:00</div>
+                  </div>
+                  <h3 class="gaming-font text-xl font-bold text-slate-100">Starter Gaming Bundle</h3>
+                  <p class="text-slate-400">RTX 3060 + 16GB RAM + 1TB SSD</p>
+                  <div class="flex justify-between items-center">
+                     <span class="text-2xl font-bold text-slate-100">$999</span>
+                     <span class="text-slate-400 line-through">$1,299</span>
+                  </div>
+                  <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2  transition duration-300">
+                     Claim Offer
+                  </button>
+               </div>
+            </div>
+
+            <!-- Offer Card 2 -->
+            <div class="bg-slate-800  overflow-hidden border border-slate-700 hover:border-indigo-500 transition duration-300">
+               <img src="https://images.unsplash.com/photo-1600861194942-f883de0dfe96"
+                  alt="Gaming PC Offer"
+                  class="w-full h-56 object-cover">
+               <div class="p-6 space-y-4">
+                  <div class="flex justify-between items-center">
+                     <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">Bundle Deal</span>
+                     <div class="text-teal-400 gaming-font">24:00:00</div>
+                  </div>
+                  <h3 class="gaming-font text-xl font-bold text-slate-100">Pro Streamer Setup</h3>
+                  <p class="text-slate-400">RTX 4070 + 32GB RAM + Monitor</p>
+                  <div class="flex justify-between items-center">
+                     <span class="text-2xl font-bold text-slate-100">$1,899</span>
+                     <span class="text-slate-400 line-through">$2,399</span>
+                  </div>
+                  <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2  transition duration-300">
+                     Claim Offer
+                  </button>
+               </div>
+            </div>
+
+            <!-- Offer Card 3 -->
+            <div class="bg-slate-800  overflow-hidden border border-slate-700 hover:border-indigo-500 transition duration-300">
+               <img src="https://images.unsplash.com/photo-1623820919239-0d0ff10797a1"
+                  alt="Gaming PC Offer"
+                  class="w-full h-56 object-cover">
+               <div class="p-6 space-y-4">
+                  <div class="flex justify-between items-center">
+                     <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm">Last Units</span>
+                     <div class="text-teal-400 gaming-font">12:00:00</div>
+                  </div>
+                  <h3 class="gaming-font text-xl font-bold text-slate-100">Ultimate Gaming Rig</h3>
+                  <p class="text-slate-400">RTX 4090 + 64GB RAM + 4TB</p>
+                  <div class="flex justify-between items-center">
+                     <span class="text-2xl font-bold text-slate-100">$3,499</span>
+                     <span class="text-slate-400 line-through">$3,999</span>
+                  </div>
+                  <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2  transition duration-300">
+                     Claim Offer
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Popular Products Section -->
+   <section class="bg-slate-800 py-16">
+      <div class="container mx-auto px-4">
+         <div class="flex justify-between items-center mb-8">
+            <h2 class="gaming-font text-3xl font-bold text-slate-100">
+               Popular Products
+            </h2>
+            <a href="#" class="text-indigo-400 hover:text-indigo-300 transition duration-300">
+               View All →
+            </a>
+         </div>
+
+         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Product Card 1 -->
+            <div class="bg-slate-900  overflow-hidden group">
+               <div class="relative">
+                  <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b"
+                     alt="Gaming PC"
+                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                  <div class="absolute top-2 right-2">
+                     <span class="bg-green-500 text-white px-2 py-1 rounded text-sm">In Stock</span>
+                  </div>
+               </div>
+               <div class="p-4">
+                  <h3 class="gaming-font text-slate-100 font-bold">Apex Pro Gaming PC</h3>
+                  <div class="flex items-center mt-2">
+                     <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                     </div>
+                     <span class="text-slate-400 text-sm ml-2">(128)</span>
+                  </div>
+                  <div class="mt-2 text-sm text-slate-400">
+                     RTX 4070 • 32GB RAM • 2TB
+                  </div>
+                  <div class="flex justify-between items-center mt-4">
+                     <span class="text-xl font-bold text-slate-100">$1,899</span>
+                     <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 transition duration-300">
+                        Add to Cart
+                     </button>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Repeat Product Cards with different images and specs -->
+         </div>
+      </div>
+   </section>
+   <!-- Custom PC Builder Section -->
+   <section class="bg-slate-900 py-16 relative overflow-hidden">
+      <!-- Background Effect -->
+      <div class="absolute inset-0 opacity-10">
+         <img src="https://images.unsplash.com/photo-1518770660439-4636190af475
+"
+            alt="Circuit Pattern"
+            class="w-full h-full object-cover">
+      </div>
+
+      <div class="container mx-auto px-4 relative">
+         <div class="text-center mb-12">
+            <h2 class="gaming-font text-3xl md:text-4xl font-bold text-slate-100 mb-4">
+               Build Your Custom Gaming PC
+            </h2>
+            <p class="text-slate-400 max-w-2xl mx-auto">
+               Choose your components and create the perfect gaming machine with our interactive builder
+            </p>
+         </div>
+
+         <!-- Builder Steps -->
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Step 1 -->
+            <div class="bg-slate-800  p-6 border border-slate-700 hover:border-indigo-500 transition duration-300">
+               <div class="flex items-center mb-4">
+                  <span class="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center gaming-font">
+                     1
+                  </span>
+                  <h3 class="gaming-font text-xl font-bold text-slate-100 ml-3">Choose Components</h3>
+               </div>
+               <p class="text-slate-400">Select from our curated list of high-performance parts</p>
+               <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704"
+                  alt="PC Components"
+                  class="w-full h-48 object-cover  mt-4">
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-slate-800  p-6 border border-slate-700 hover:border-indigo-500 transition duration-300">
+               <div class="flex items-center mb-4">
+                  <span class="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center gaming-font">
+                     2
+                  </span>
+                  <h3 class="gaming-font text-xl font-bold text-slate-100 ml-3">Review Build</h3>
+               </div>
+               <p class="text-slate-400">Check compatibility and performance metrics</p>
+               <img src="https://images.unsplash.com/photo-1624705002806-5d72df19c3ad"
+                  alt="PC Build Review"
+                  class="w-full h-48 object-cover  mt-4">
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-slate-800  p-6 border border-slate-700 hover:border-indigo-500 transition duration-300">
+               <div class="flex items-center mb-4">
+                  <span class="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center gaming-font">
+                     3
+                  </span>
+                  <h3 class="gaming-font text-xl font-bold text-slate-100 ml-3">Place Order</h3>
+               </div>
+               <p class="text-slate-400">We build, test, and deliver your custom PC</p>
+               <img src="https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2"
+                  alt="Final Build"
+                  class="w-full h-48 object-cover  mt-4">
+            </div>
+         </div>
+
+         <!-- CTA Button -->
+         <div class="text-center">
+            <a href="#builder" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3  transition duration-300 gaming-font hover:shadow-lg hover:shadow-indigo-500/20">
+               Start Building Now
+            </a>
+         </div>
+      </div>
+   </section>
+
+   <!-- Why Choose Us Section -->
+   <section class="bg-slate-800 py-16">
+      <div class="container mx-auto px-4">
+         <div class="text-center mb-12">
+            <h2 class="gaming-font text-3xl md:text-4xl font-bold text-slate-100 mb-4">
+               Why Choose ITmax Gaming
+            </h2>
+            <p class="text-slate-400 max-w-2xl mx-auto">
+               Experience the perfect blend of performance, reliability, and customer service
+            </p>
+         </div>
+
+         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Feature 1 -->
+            <div class="text-center p-6 bg-slate-900  hover:transform hover:-translate-y-2 transition duration-300">
+               <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-tools text-2xl text-white"></i>
+               </div>
+               <h3 class="gaming-font text-xl font-bold text-slate-100 mb-2">Expert Build Service</h3>
+               <p class="text-slate-400">Professional assembly by certified technicians</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="text-center p-6 bg-slate-900  hover:transform hover:-translate-y-2 transition duration-300">
+               <div class="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-headset text-2xl text-white"></i>
+               </div>
+               <h3 class="gaming-font text-xl font-bold text-slate-100 mb-2">24/7 Support</h3>
+               <p class="text-slate-400">Round-the-clock technical assistance</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="text-center p-6 bg-slate-900  hover:transform hover:-translate-y-2 transition duration-300">
+               <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-shield-alt text-2xl text-white"></i>
+               </div>
+               <h3 class="gaming-font text-xl font-bold text-slate-100 mb-2">3-Year Warranty</h3>
+               <p class="text-slate-400">Comprehensive coverage on all builds</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="text-center p-6 bg-slate-900  hover:transform hover:-translate-y-2 transition duration-300">
+               <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-shipping-fast text-2xl text-white"></i>
+               </div>
+               <h3 class="gaming-font text-xl font-bold text-slate-100 mb-2">Fast Delivery</h3>
+               <p class="text-slate-400">Quick and secure shipping nationwide</p>
+            </div>
+         </div>
+
+         <!-- Stats -->
+         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+            <div class="text-center">
+               <div class="text-3xl font-bold text-indigo-400 gaming-font">15K+</div>
+               <div class="text-slate-400 mt-2">PCs Built</div>
+            </div>
+            <div class="text-center">
+               <div class="text-3xl font-bold text-indigo-400 gaming-font">99%</div>
+               <div class="text-slate-400 mt-2">Satisfaction Rate</div>
+            </div>
+            <div class="text-center">
+               <div class="text-3xl font-bold text-indigo-400 gaming-font">24/7</div>
+               <div class="text-slate-400 mt-2">Support</div>
+            </div>
+            <div class="text-center">
+               <div class="text-3xl font-bold text-indigo-400 gaming-font">3-Year</div>
+               <div class="text-slate-400 mt-2">Warranty</div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- Testimonials Section -->
+   <section class="bg-slate-900 py-16">
+      <div class="container mx-auto px-4">
+         <div class="text-center mb-12">
+            <h2 class="gaming-font text-3xl md:text-4xl font-bold text-slate-100 mb-4">
+               What Gamers Say About Us
+            </h2>
+            <p class="text-slate-400 max-w-2xl mx-auto">
+               Real feedback from our gaming community
+            </p>
+         </div>
+
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-slate-800  p-6 relative">
+               <div class="absolute -top-4 right-4 text-4xl text-indigo-500 opacity-50">
+                  <i class="fas fa-quote-right"></i>
+               </div>
+               <div class="flex items-center mb-4">
+                  <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857"
+                     alt="User"
+                     class="w-12 h-12 rounded-full object-cover">
+                  <div class="ml-4">
+                     <h4 class="text-slate-100 font-semibold">Alex Thompson</h4>
+                     <div class="flex text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                     </div>
+                  </div>
+               </div>
+               <p class="text-slate-400">
+                  "The custom PC I received exceeded all my expectations. Amazing build quality and the performance is incredible. Their support team was super helpful throughout the process."
+               </p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-slate-800  p-6 relative">
+               <div class="absolute -top-4 right-4 text-4xl text-indigo-500 opacity-50">
+                  <i class="fas fa-quote-right"></i>
+               </div>
+               <div class="flex items-center mb-4">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+                     alt="User"
+                     class="w-12 h-12 rounded-full object-cover">
+                  <div class="ml-4">
+                     <h4 class="text-slate-100 font-semibold">Sarah Chen</h4>
+                     <div class="flex text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                     </div>
+                  </div>
+               </div>
+               <p class="text-slate-400">
+                  "As a professional streamer, I needed a reliable setup. ITmax delivered exactly what I needed. The PC runs all my games and streaming software flawlessly."
+               </p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="bg-slate-800  p-6 relative">
+               <div class="absolute -top-4 right-4 text-4xl text-indigo-500 opacity-50">
+                  <i class="fas fa-quote-right"></i>
+               </div>
+               <div class="flex items-center mb-4">
+                  <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61"
+                     alt="User"
+                     class="w-12 h-12 rounded-full object-cover">
+                  <div class="ml-4">
+                     <h4 class="text-slate-100 font-semibold">Marcus Rodriguez</h4>
+                     <div class="flex text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                     </div>
+                  </div>
+               </div>
+               <p class="text-slate-400">
+                  "The PC builder tool made it so easy to customize my dream setup. Great prices and the build quality is top-notch. Highly recommend!"
+               </p>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Newsletter Section -->
+   <section class="bg-gradient-to-r from-indigo-600 to-purple-600 py-16">
+      <div class="container mx-auto px-4">
+         <div class="max-w-3xl mx-auto text-center">
+            <h2 class="gaming-font text-3xl md:text-4xl font-bold text-white mb-4">
+               Stay Updated with Gaming Tech
+            </h2>
+            <p class="text-indigo-100 mb-8">
+               Subscribe to our newsletter for exclusive deals, building tips, and latest tech news
+            </p>
+            <form class="flex flex-col md:flex-row gap-4 justify-center">
+               <input
+                  type="email"
+                  placeholder="Enter your email"
+                  class="px-6 py-3  focus:outline-none focus:ring-2 focus:ring-white/50 bg-white/10 text-white placeholder-white/60 flex-1 max-w-md">
+               <button class="bg-white text-indigo-600 px-8 py-3  font-semibold hover:bg-indigo-100 transition duration-300">
+                  Subscribe
+               </button>
+            </form>
+         </div>
+      </div>
+   </section>
+
+   </div>
+</main>
+<?php
+require_once "includes/footer.php";
+?><!-- Footer -->
+<footer class="bg-slate-800 pt-16 pb-8">
+   <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+         <!-- Company Info -->
+         <div class="space-y-4">
+            <div class="gaming-font text-2xl font-bold">
+               <span class="text-indigo-400">IT</span><span class="text-slate-200">max</span>
+            </div>
+            <p class="text-slate-400">
+               Custom gaming PCs built by gamers, for gamers.
+            </p>
+            <div class="flex space-x-4">
+               <a href="#" class="text-slate-400 hover:text-indigo-400">
+                  <i class="fab fa-facebook-f"></i>
+               </a>
+               <a href="#" class="text-slate-400 hover:text-indigo-400">
+                  <i class="fab fa-twitter"></i>
+               </a>
+               <a href="#" class="text-slate-400 hover:text-indigo-400">
+                  <i class="fab fa-instagram"></i>
+               </a>
+               <a href="#" class="text-slate-400 hover:text-indigo-400">
+                  <i class="fab fa-youtube"></i>
+               </a>
+            </div>
+         </div>
+
+         <!-- Quick Links -->
+         <div>
+            <h3 class="text-slate-100 font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">Build Your PC</a></li>
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">Pre-built PCs</a></li>
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">Components</a></li>
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">Support</a></li>
+            </ul>
+         </div>
+
+         <!-- Support -->
+         <div>
+            <h3 class="text-slate-100 font-semibold mb-4">Support</h3>
+            <ul class="space-y-2">
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">Contact Us</a></li>
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">FAQs</a></li>
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">Warranty</a></li>
+               <li><a href="#" class="text-slate-400 hover:text-indigo-400">Returns</a></li>
+            </ul>
+         </div>
+
+         <!-- Contact -->
+         <div>
+            <h3 class="text-slate-100 font-semibold mb-4">Contact</h3>
+            <ul class="space-y-2">
+               <li class="text-slate-400">
+                  <i class="fas fa-map-marker-alt w-6"></i> 123 Gaming Street, Tech City
+               </li>
+               <li class="text-slate-400">
+                  <i class="fas fa-phone w-6"></i> (555) 123-4567
+               </li>
+               <li class="text-slate-400">
+                  <i class="fas fa-envelope w-6"></i> support@itmax.com
+               </li>
+            </ul>
+         </div>
+      </div>
+
+      <!-- Bottom Footer -->
+      <div class="border-t border-slate-700 pt-8">
+         <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-slate-400">
+               © 2025 ITmax Gaming. All rights reserved.
+            </p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+               <a href="#" class="text-slate-400 hover:text-indigo-400">Privacy Policy</a>
+               <a href="#" class="text-slate-400 hover:text-indigo-400">Terms of Service</a>
+               <a href="#" class="text-slate-400 hover:text-indigo-400">Cookie Policy</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</footer>
+
+<script src="shop.js"></script>
+</body>
+</html>
